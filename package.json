@@ -1,0 +1,22 @@
+{
+  "name": "leaderboard",
+  "version": "1.0.0",
+  "description": "Leaderboard App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewk17/leaderboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewk17/leaderboard/issues"
+  },
+  "homepage": "https://github.com/andrewk17/leaderboard#readme",
+  "dependencies": {
+    "mongodb": "^2.2.9"
+  }
+}
