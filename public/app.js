@@ -51,5 +51,4 @@ app.controller('main', function($scope, $http) {
   };
 
   getRanksAndMsgs();
-  // getAllMessages();
 });
