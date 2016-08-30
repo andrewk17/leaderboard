@@ -8,9 +8,9 @@
   </head>
   <body ng-app="leaderboard" ng-controller="main">
     <h1>Leaderboard</h1>
-    <form ng-submit="submit()">
+    <form ng-submit="submit()" method="post">
       Winner<input type="text" ng-model="match.winner" required><br>
-      Loser<input type="text" ng-model="match.loser" required><br>
+      Loser<input type="text" ng-model="match.loser"><br>
       <button type="submit" class="btn">Submit</button><br>
     </form>
     <table>
