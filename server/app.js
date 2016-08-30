@@ -1,8 +1,10 @@
 require('./db.js');
 var express = require('express');
+var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var app = express();
 app.use(express.static(__dirname + '/../public'));
+app.use(bodyParser.json());
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -13,32 +15,34 @@ app.get('/', function(req, res) {
 });
 
 app.get('/rankings', function(req, res) {
-  Ranking.find({}, function(err, ranking) {
+  Ranking.find({}, {}, {
+    sort: {
+      wins: -1
+    }
+  }, function(err, ranking) {
     if (ranking) {
       console.log('found something');
       res.send(ranking);
       console.log(ranking);
     } else {
       console.log('nothing found in DB');
-      // res.send();
+      res.send();
     }
   });
 });
 
-app.post('/', function(req, res) {
-  // Increment DB
-  console.log('in post');
-  Ranking.findOne({playerName: 'Andrew'}, function(err, ranking) {
+app.post('/rankings', function(req, res) {
+  var playerName = req.body.data;
+  Ranking.findOne({playerName: playerName}, function(err, ranking) {
     if (ranking) {
       ranking.wins++;
       ranking.save();
-      console.log('doc in collection updated');
+      res.send([ranking]);
     } else {
-      var ranking = new Ranking({playerName: 'Andrew', wins: 0});
+      var ranking = new Ranking({playerName: playerName, wins: 1});
       ranking.save();
-      console.log('new entry into collection');
+      res.send([ranking]);
     }
-    res.redirect('/');
   });
 });
 
