@@ -7,11 +7,15 @@
     <script src="app.js"></script>
   </head>
   <body ng-app="leaderboard" ng-controller="main">
-    <h1>Leaderboard</h1>
-    <form ng-submit="submit()" method="post">
-      Winner<input type="text" ng-model="match.winner" required><br>
+    <h1>Ping Pong Leaderboard</h1>
+    <nav>
+      <a href='/login'>Login</a> |
+      <a href='/logout'>Logout</a>
+    </nav>
+    <form ng-submit="addPlayer()" method="post">
+      Add New Player<input type="text" ng-model="match.newPlayer" required>
       <!-- Loser<input type="text" ng-model="match.loser"><br> -->
-      <button type="submit" class="btn">Submit</button><br>
+      <button type="submit" class="btn">Submit</button>
     </form>
     <table>
       <tr>
@@ -24,6 +28,17 @@
         <td>{{ranking.playerName}}</td>
         <td>{{ranking.wins}}</td>
         <td><button type="button" ng-click="addWin(ranking)">Win</button></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Time</th>
+        <th>Message</th>
+      </tr>
+      <tr ng-repeat="message in messages">
+        <td>{{message.createdAt | date:'yyyy-MM-dd HH:mm:ss a'}}</td>
+        <td>{{message.message}}</td>
+      </tr>
       </tr>
     </table>
   </body>

@@ -12,3 +12,9 @@ var rankingSchema = mongoose.Schema({
 });
 
 var Ranking = mongoose.model('Ranking', rankingSchema);
+
+var messageSchema = mongoose.Schema({
+  message: String
+}, {timestamps: true});
+
+var Message = mongoose.model('Message', messageSchema);

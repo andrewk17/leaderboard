@@ -10,9 +10,31 @@ app.use(bodyParser.json());
 mongoose.connect('mongodb://localhost/test');
 
 var Ranking = mongoose.model('Ranking');
+var Message = mongoose.model('Message');
+
+var logMessage = function(msgToLog) {
+  var msg = new Message({message: msgToLog});
+  msg.save();
+};
 
 app.get('/', function(req, res) {
   res.send('index');
+});
+
+app.get('/api/messages', function(req, res) {
+  console.log('in messages get');
+  Message.find({}, {}, {
+    sort: {
+      createdAt: -1
+    },
+    limit: 10
+  }, function(err, messages) {
+    if (messages) {
+      res.send(messages);
+    } else {
+      console.log('error retrieving messages');
+    }
+  });
 });
 
 app.get('/api/rankings', function(req, res) {
@@ -38,11 +60,28 @@ app.post('/api/rankings', function(req, res) {
     if (ranking) {
       ranking.wins++;
       ranking.save();
+      logMessage(playerName + ' won a match!');
       res.send([ranking]);
     } else {
-      var ranking = new Ranking({ playerName: playerName, wins: 1 });
-      ranking.save();
+      // var ranking = new Ranking({ playerName: playerName, wins: 1 });
+      // ranking.save();
+      logMessage('Error! Player was not found in list of players');
       res.send([ranking]);
+    }
+  });
+});
+
+app.post('/api/players', function(req, res) {
+  var playerName = req.body.data;
+  Ranking.findOne({ playerName: playerName }, function(err, ranking) {
+    if (ranking) {
+      res.end();
+    } else {
+      var ranking = new Ranking({ playerName: playerName, wins: 0 });
+      ranking.save();
+      // res.send([ranking]);
+      logMessage(playerName + ' was added to list of players');
+      res.end();
     }
   });
 });
