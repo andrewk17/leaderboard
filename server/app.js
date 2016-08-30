@@ -12,6 +12,19 @@ app.get('/', function(req, res) {
   res.send('index');
 });
 
+app.get('/rankings', function(req, res) {
+  Ranking.find({}, function(err, ranking) {
+    if (ranking) {
+      console.log('found something');
+      res.send(ranking);
+      console.log(ranking);
+    } else {
+      console.log('nothing found in DB');
+      // res.send();
+    }
+  });
+});
+
 app.post('/', function(req, res) {
   // Increment DB
   console.log('in post');

@@ -14,9 +14,9 @@
       <button type="submit" class="btn">Submit</button><br>
     </form>
     <table>
-      <tr ng-repeat="(name, wins) in players">
-        <td>{{name}}</td>
-        <td>{{wins}}</td>
+      <tr ng-repeat="ranking in rankings">
+        <td>{{ranking.playerName}}</td>
+        <td>{{ranking.wins}}</td>
       </tr>
     </table>
   </body>
