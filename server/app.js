@@ -61,12 +61,14 @@ app.post('/api/rankings', function(req, res) {
       ranking.wins++;
       ranking.save();
       logMessage(playerName + ' won a match!');
-      res.send([ranking]);
+      // res.send([ranking]);
+      res.end();
     } else {
       // var ranking = new Ranking({ playerName: playerName, wins: 1 });
       // ranking.save();
       logMessage('Error! Player was not found in list of players');
-      res.send([ranking]);
+      // res.send([ranking]);
+      res.end();
     }
   });
 });

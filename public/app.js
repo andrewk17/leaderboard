@@ -14,7 +14,7 @@ app.controller('main', function($scope, $http) {
     });
   };
 
-  var getAllRankings = function() {
+  var getRanksAndMsgs = function() {
     $http.get('/api/rankings')
       .then(
         function(response) {
@@ -32,26 +32,24 @@ app.controller('main', function($scope, $http) {
   //     .then(function(response) {
   //       $scope.rankings = response.data;
   //     });
-  //   getAllRankings();
+  //   getRanksAndMsgs();
   // };
 
   $scope.addPlayer = function() {
     $http.post('api/players', { data: $scope.match.newPlayer })
     .then(function(response) {
-      getAllRankings();
+      getRanksAndMsgs();
       $scope.match.newPlayer = '';
     });
   };
 
   $scope.addWin = function(ranking) {
-    // console.log($event);
     $http.post('/api/rankings', { data: ranking.playerName })
       .then(function(response) {
-        $scope.rankings = response.data;
-        getAllRankings();
+        getRanksAndMsgs();
       });
   };
 
-  getAllRankings();
+  getRanksAndMsgs();
   // getAllMessages();
 });
