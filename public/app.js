@@ -51,8 +51,12 @@ app.controller('leaderboard', function($scope, $http, $location) {
   };
 
   $scope.goToAnalytics = function(ranking) {
-    console.log(ranking._id);
-    $location.path('/analytics');
+    // console.log(ranking._id);
+    $location.path('/analytics/' + ranking._id);
+  };
+
+  $scope.routeHome = function() {
+    $location.path('/');
   };
 
   getRanksAndMsgs();
@@ -64,7 +68,8 @@ app.config(function($routeProvider) {
     .when('/', {
       templateUrl: 'leaderboard.html'
     })
-    .when('/analytics', {
-      templateUrl: 'analytics.html'
+    .when('/analytics:id', {
+      templateUrl: 'analytics.html',
+      controller: 'analytics'
     });
 });
