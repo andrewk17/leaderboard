@@ -1,0 +1,42 @@
+<div class="addnewp">
+  <p>Add New Player</p>
+</div>
+<div class="newPlayerInput">
+  <form ng-submit="addPlayer()" method="post">
+    <input type="text" ng-model="match.newPlayer" required>
+    <!-- Loser<input type="text" ng-model="match.loser"><br> -->
+    <!-- <button type="submit" class="btn">Submit</button> -->
+  </form>
+</div>
+<div class="tables">
+  <div class="ranking">
+    <table>
+      <tr>
+        <th>Ranking</th>
+        <th>Name</th>
+        <th>Wins</th>
+      </tr>
+      <tr ng-repeat="ranking in rankings track by ranking._id">
+        <td>{{$index + 1}}</td>
+        <td ng-click="goToAnalytics(ranking)">{{ranking.playerName}}</td>
+        <td>{{ranking.wins}}</td>
+        <td>
+          <button type="button" ng-click="addWin(ranking)">Win</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="messages">
+    <table>
+      <tr>
+        <th>Time</th>
+        <th>Message</th>
+      </tr>
+      <tr ng-repeat="message in messages track by message._id">
+        <td>{{message.createdAt | date:'MM-dd HH:mm a'}}</td>
+        <td>{{message.message}}</td>
+      </tr>
+      </tr>
+    </table>
+  </div>
+</div>

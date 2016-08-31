@@ -5,59 +5,20 @@
   <meta charset="UTF-8">
   <title>Leaderboard</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.js"></script>
   <script src="app.js"></script>
   <link rel="stylesheet" type="text/css" href="main.css">
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+  <!-- <script src="analytics.js"></script> -->
 </head>
 
-<body ng-app="leaderboard" ng-controller="main">
+<body ng-app="leaderboard" ng-controller="leaderboard">
   <h1>Ping Pong Leaderboard</h1>
   <!-- <nav>
     <a href='/login'>Login</a> |
     <a href='/logout'>Logout</a>
   </nav> -->
-  <div class="addnewp">
-  <p>Add New Player</p>
-  </div>
-  <div class="newPlayerInput">
-    <form ng-submit="addPlayer()" method="post">
-      <input type="text" ng-model="match.newPlayer" required>
-      <!-- Loser<input type="text" ng-model="match.loser"><br> -->
-      <!-- <button type="submit" class="btn">Submit</button> -->
-    </form>
-  </div>
-  <div class="tables">
-  <div class="ranking">
-    <table>
-      <tr>
-        <th>Ranking</th>
-        <th>Name</th>
-        <th>Wins</th>
-      </tr>
-      <tr ng-repeat="ranking in rankings track by ranking._id">
-        <td>{{$index + 1}}</td>
-        <td>{{ranking.playerName}}</td>
-        <td>{{ranking.wins}}</td>
-        <td>
-          <button type="button" ng-click="addWin(ranking)">Win</button>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div class="messages">
-    <table>
-      <tr>
-        <th>Time</th>
-        <th>Message</th>
-      </tr>
-      <tr ng-repeat="message in messages track by message._id">
-        <td>{{message.createdAt | date:'yyyy-MM-dd HH:mm:ss a'}}</td>
-        <td>{{message.message}}</td>
-      </tr>
-      </tr>
-    </table>
-  </div>
-  </div>
+  <div ng-view></div>
 </body>
 
 </html>

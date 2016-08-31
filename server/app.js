@@ -1,4 +1,5 @@
 require('./db.js');
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -12,8 +13,8 @@ mongoose.connect('mongodb://localhost/test');
 var Ranking = mongoose.model('Ranking');
 var Message = mongoose.model('Message');
 
-var logMessage = function(msgToLog) {
-  var msg = new Message({message: msgToLog});
+var logMessage = function(msgToLog, userId) {
+  var msg = new Message({message: msgToLog, rankingId: userId});
   msg.save();
 };
 
@@ -23,11 +24,12 @@ app.get('/', function(req, res) {
 
 app.get('/api/messages', function(req, res) {
   console.log('in messages get');
+  var limit = req.query.limit;
   Message.find({}, {}, {
     sort: {
       createdAt: -1
     },
-    limit: 10
+    limit: limit
   }, function(err, messages) {
     if (messages) {
       res.send(messages);
@@ -82,7 +84,7 @@ app.post('/api/players', function(req, res) {
       var ranking = new Ranking({ playerName: playerName, wins: 0 });
       ranking.save();
       // res.send([ranking]);
-      logMessage(playerName + ' was added to list of players');
+      logMessage(playerName + ' was added to list of players', ranking.id);
       res.end();
     }
   });

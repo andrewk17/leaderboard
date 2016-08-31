@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
@@ -14,7 +15,8 @@ var rankingSchema = mongoose.Schema({
 var Ranking = mongoose.model('Ranking', rankingSchema);
 
 var messageSchema = mongoose.Schema({
-  message: String
+  message: String,
+  rankingId: [{ type: Schema.Types.ObjectId, ref: 'Ranking' }]
 }, {timestamps: true});
 
 var Message = mongoose.model('Message', messageSchema);

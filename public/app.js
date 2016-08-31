@@ -1,17 +1,17 @@
-var app = angular.module('leaderboard', []);
+var app = angular.module('leaderboard', ['ngRoute']);
 
-app.controller('main', function($scope, $http) {
+app.controller('leaderboard', function($scope, $http, $location) {
 
   $scope.match = {};
 
   var getAllMessages = function() {
-    $http.get('/api/messages')
-    .then( function(response) {
-      $scope.messages = response.data;
-    },
-    function(response) {
+    $http.get('/api/messages', {params: {limit:10}})
+      .then(function(response) {
+        $scope.messages = response.data;
+      },
+        function(response) {
 
-    });
+        });
   };
 
   var getRanksAndMsgs = function() {
@@ -37,10 +37,10 @@ app.controller('main', function($scope, $http) {
 
   $scope.addPlayer = function() {
     $http.post('api/players', { data: $scope.match.newPlayer })
-    .then(function(response) {
-      getRanksAndMsgs();
-      $scope.match.newPlayer = '';
-    });
+      .then(function(response) {
+        getRanksAndMsgs();
+        $scope.match.newPlayer = '';
+      });
   };
 
   $scope.addWin = function(ranking) {
@@ -50,5 +50,21 @@ app.controller('main', function($scope, $http) {
       });
   };
 
+  $scope.goToAnalytics = function(ranking) {
+    console.log(ranking._id);
+    $location.path('/analytics');
+  };
+
   getRanksAndMsgs();
+});
+
+
+app.config(function($routeProvider) {
+  $routeProvider
+    .when('/', {
+      templateUrl: 'leaderboard.html'
+    })
+    .when('/analytics', {
+      templateUrl: 'analytics.html'
+    });
 });
